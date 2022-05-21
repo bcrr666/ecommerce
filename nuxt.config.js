@@ -11,7 +11,11 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css' 
+      }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -35,8 +39,28 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    '@nuxtjs/axios',
+  '@nuxtjs/auth'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+
+
+  axios: {
+    baseURL: 'http://ecommerce-services.test'
+  },
+  
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/authenticate/login', method: 'post', propertyName: 'data.session_token' },
+          user: { url: '/api/authenticate/user', method: 'get', propertyName: 'data'},
+          logout: false
+        }
+      }
+    }
+  },
 }
